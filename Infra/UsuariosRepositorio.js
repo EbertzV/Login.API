@@ -1,9 +1,9 @@
 var User = require('../Domain/User')
 const mongoose = require('mongoose')
-const url = "mongodb://127.0.0.1:27017/login"
+require("dotenv").config()
 
 module.exports = async function recuperarPorUsername(username){
-    await mongoose.connect(url);
+    await mongoose.connect(process.env.DATABASE_URL);
     var userSchema = new mongoose.Schema({
         _id: String,
         username: String,

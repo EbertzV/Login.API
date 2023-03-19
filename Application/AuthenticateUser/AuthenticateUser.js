@@ -2,7 +2,7 @@ var GenerateToken = require('../GenerateToken/GenerateToken')
 var UsuariosRepositorio = require('../../Infra/UsuariosRepositorio')
 
 module.exports = async function execute(command){
-    await UsuariosRepositorio(command.username)
+    return await UsuariosRepositorio(command.username)
         .then(usuario => {
             if(usuario == null)
                 return `Usuário ${command.username} não encontrado`;
