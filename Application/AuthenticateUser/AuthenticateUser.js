@@ -1,5 +1,6 @@
 var GenerateToken = require('../GenerateToken/GenerateToken')
 var UsuariosRepositorio = require('../../Infra/UsuariosRepositorio')
+var AuthenticatedUser = require('../../Domain/AuthenticatedUser')
 
 module.exports = async function execute(command){
     return await UsuariosRepositorio(command.username)
@@ -9,7 +10,11 @@ module.exports = async function execute(command){
             if(usuario.PasswordHits(command.password))
             {
                 var token = GenerateToken(usuario);
-                return token;
+                return new AuthenticatedUser(
+                    usuario.id,
+                    Date.now(),
+                    token
+                );
             } else {
                 return "Senha inválida";
             }

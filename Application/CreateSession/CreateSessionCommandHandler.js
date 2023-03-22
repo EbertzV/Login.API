@@ -1,12 +1,15 @@
 var uuid = require("uuid")
+var repository = require("../../Infra/Session/SessionsRepository")
+var Session = require('../../Domain/Session')
 
-module.exports = function execute(command){
+module.exports = async function execute(command){
+    console.log(command)
     var session = new Session(
         uuid.v4(),
-        command.user.id, 
+        command.userId, 
         command.when,
         command.token
     )
 
-    
+    repository(session)
 }
