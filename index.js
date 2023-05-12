@@ -13,7 +13,7 @@ app.post('/Login', async function(request, response) {
     var inputModel = new AuthenticateUserCommand(request.body.username, request.body.password);
     await AuthenticateUser(inputModel)
         .then(result => {
-            var command = new CreateSessionCommand(result.id, result.creationDate, result.token)
+            var command = new CreateSessionCommand(result.userId, result.creationDate, result.token)
             CreateSessionCommandHandler(command)
                 .then(res => {
                     response.end(res)

@@ -12,5 +12,5 @@ module.exports = async function recuperarPorUsername(username){
     var users = mongoose.model("users", userSchema);
     var result = await users.findOne({ username: username });
     mongoose.disconnect();
-    return new User(result.id, result.username, result.password);
+    return new User(result._id, result.username, result.password);
 }

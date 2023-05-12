@@ -1,3 +1,5 @@
+var uuid = require("uuid")
+
 module.exports = class AuthenticatedUser{
     constructor(userId, creationDate, token)
     {
