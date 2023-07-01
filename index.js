@@ -5,6 +5,7 @@ var AuthenticateUserCommand = require('./Application/AuthenticateUser/Authentica
 var AuthenticateUser = require('./Application/AuthenticateUser/AuthenticateUser')
 var CreateSessionCommand = require('./Application/CreateSession/CreateSessionCommand')
 var CreateSessionCommandHandler = require('./Application/CreateSession/CreateSessionCommandHandler')
+var EvaluateSessionHandler = require('./Application/EvaluateSession/EvaluateSessionHandler')
 
 app.use(express.json())
 app.use(cors())
@@ -20,7 +21,16 @@ app.post('/Login', async function(request, response) {
                 }, err => {
                     console.log(err)
                 })
-        }).catch(result => retorno.end(result));
+        }).catch(result => response.end(result));
+})
+
+app.get('/Session', async function(request, response){
+    var myToken = request.body.token;
+    await EvaluateSessionHandler(myToken)
+        .then(result => {
+            response.send({ valid: result })
+            response.end()
+        }).catch(err => response.end(err))
 })
 
 app.listen(3000);

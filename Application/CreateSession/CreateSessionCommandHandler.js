@@ -9,5 +9,6 @@ module.exports = async function execute(command){
         command.when,
         command.token
     )
-    repository(session)
+    await repository(session)
+    return session.token
 }
