@@ -1,35 +1,29 @@
-var uuid = require("uuid")
-var Session = require("../../Domain/Session")
 const mongoose = require("mongoose")
+var SessionModel = require("./Session")
 require("dotenv").config()
 
 module.exports = async function insert(session){
     mongoose.connect(process.env.DATABASE_URL)
-    var sessionSchema = new mongoose.Schema({
-        _id: String,
-        userId: String,
-        when: Date,
-        token: String
-    })
-
-    var sessions = mongoose.model("sessions", sessionSchema);
-    const sess = new sessions(
-        {
-            _id: session.id, 
-            userId: session.userId,
-            when: session.creationDate,
-            token: session.token
-        });
-    try
-    {
-        console.log(sess)
-        await sess.save();     
-    } 
-    catch (err)
-    {
-        console.log(err);
-    } 
-    finally{
-        mongoose.disconnect()
-    }
+        .then(async function(res){
+            const sess = new SessionModel(
+                {
+                    _id: session.id, 
+                    userId: session.userId,
+                    when: session.creationDate,
+                    token: session.token,
+                    minutesLength: session.minutesLength
+                });
+            sess.save()
+                .then(function(res) {
+                    mongoose.disconnect()
+                })
+                .catch(err => {
+                    console.log(err)
+                    mongoose.disconnect()
+                })
+            
+        }).catch(err =>{
+            console.log(err)
+            mongoose.disconnect()
+        })
 }

@@ -1,10 +1,12 @@
 const mongoose = require("mongoose")
+require("dotenv").config()
 
 const sessionSchema = new mongoose.Schema({
     _id: String,
     userId: String,
     when: Date,
-    token: String
+    token: String,
+    minutesLength: Number
 })
 
-module.exports = sessionSchema.model("sessions", sessionSchema)
+module.exports = mongoose.model("sessions", sessionSchema)
