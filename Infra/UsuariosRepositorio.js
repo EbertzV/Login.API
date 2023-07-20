@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 require("dotenv").config()
 
 module.exports = async function recuperarPorUsername(username){
+    console.log(process.env.DATABASE_URL)
     await mongoose.connect(process.env.DATABASE_URL);
     var userSchema = new mongoose.Schema({
         _id: String,
@@ -11,6 +12,7 @@ module.exports = async function recuperarPorUsername(username){
     })
     var users = mongoose.model("users", userSchema);
     var result = await users.findOne({ username: username });
+    console.log(result)
     mongoose.disconnect();
     return new User(result._id, result.username, result.password);
 }

@@ -3,6 +3,7 @@ var SessionModel = require("./Session")
 require("dotenv").config()
 
 module.exports = async function insert(session){
+    console.log(process.env.DATABASE_URL)
     mongoose.connect(process.env.DATABASE_URL)
         .then(async function(res){
             const sess = new SessionModel(
