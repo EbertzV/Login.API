@@ -7,6 +7,7 @@ var CreateSessionCommand = require('./Application/CreateSession/CreateSessionCom
 var CreateSessionCommandHandler = require('./Application/CreateSession/CreateSessionCommandHandler')
 var EvaluateSessionHandler = require('./Application/EvaluateSession/EvaluateSessionHandler')
 
+require("dotenv").config()
 app.use(express.json())
 app.use(cors())
 
@@ -33,4 +34,4 @@ app.get('/Session', async function(request, response){
         }).catch(err => response.end(err))
 })
 
-app.listen(3000);
+app.listen(process.env.PORT);
